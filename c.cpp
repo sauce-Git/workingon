@@ -8,8 +8,17 @@ int ans[3] = {0, };
 int qtree(int x, int y, int n);
 
 int main(){
-
-	return 0;
+  int n, a;
+  cin >> n;
+  for(int i = 0; i < n; i++){
+    for(int j = 0; j < n; j++){
+      cin >> a;
+      S[i][j] = a; 
+    }  
+  }
+  qtree(0, 0, n);
+	cout << ans[0] << "\n" << ans[1];
+  return 0;
 }
 
 int qtree(int x, int y, int n){
