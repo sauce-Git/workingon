@@ -1,42 +1,56 @@
 #include <iostream>
+#include <cmath>
+#define abs(x) ((x < 0) ? (-x):(x))
+#define MAX 100000
 using namespace std;
-const int MAX = 1000;
 
-int S[MAX][MAX];
-int ans[3] = {0, };
+int arr[MAX + 1] = {0, };
+int arr_size = 1;
 
-int qtree(int x, int y, int n);
+void print_arr();
+void swap(int a, int b);
+void heap_in(int x);
+int heap_pop();
 
 int main(){
-  int n, a;
-  cin >> n;
-  for(int i = 0; i < n; i++){
-    for(int j = 0; j < n; j++){
-      cin >> a;
-      S[i][j] = a; 
-    }  
-  }
-  qtree(0, 0, n);
-	cout << ans[0] << "\n" << ans[1];
-  return 0;
+	int n, a;
+	cin >> n;
+	for(int i = 0; i < n; i++) {
+		cin >> a;
+		if(a) heap_in(a);
+		else heap_pop();
+		print_arr();
+	}
+	return 0;
 }
 
-int qtree(int x, int y, int n){
-	int a[4];
-	int sum = 0;
-	if(n == 1) return S[x][y];
-	else {
-		n /= 2;
-		a[0] = qtree(x, y, n);
-		a[1] = qtree(x + n, y, n);
-		a[2] = qtree(x, y + n, n);
-		a[3] = qtree(x + n, y + n, n);
+void print_arr(){
+	for(int i = 0; i < arr_size; i++) cout << arr[i] << " ";
+	cout << "\n";
+}
+
+void swap(int a, int b){
+	int temp = arr[a];
+	arr[a] = arr[b];
+	arr[b] = temp;
+}
+
+void heap_in(int x){
+	int i = arr_size;
+	arr[arr_size++] = x;
+	while(i - 1){
+		if(abs(arr[i]) < abs(arr[i/2]) || ((arr[i] < 0) && (arr[i]  == -arr[i/2]))) swap(i, i/2), i /= 2;
+		else return;
 	}
-	for(int i = 0; i < 4; i++) sum += a[i];
-	if(sum == 4) return 1;
-	else if(sum == 0) return 0;
-	else {
-		for(int i = 0; i < 4; i++) ans[a[i]]++;
-		return 2;
+	return;
+}
+
+int heap_pop(){
+	int pop = arr[1];
+	int i = 1;
+	int a = arr[--arr_size];
+	arr[arr_size] = 0;
+	while(1){
+		if(abs(arr[2*i]) < abs(arr[i]))
 	}
 }
