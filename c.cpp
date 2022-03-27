@@ -1,56 +1,58 @@
 #include <iostream>
-#include <cmath>
-#define abs(x) ((x < 0) ? (-x):(x))
-#define MAX 100000
+#include <queue>
+#define MAX 1000
 using namespace std;
 
-int arr[MAX + 1] = {0, };
-int arr_size = 1;
+int arr[MAX][MAX];
+int dx[4] = {1, -1, 0, 0};
+int dy[4] = {0, 0, 1, -1};
+int n, m;
+queue<pair<int, int>> q;
 
 void print_arr();
-void swap(int a, int b);
-void heap_in(int x);
-int heap_pop();
 
 int main(){
-	int n, a;
-	cin >> n;
-	for(int i = 0; i < n; i++) {
-		cin >> a;
-		if(a) heap_in(a);
-		else heap_pop();
-		print_arr();
+	int x, y;
+	int nx, ny;
+	int count = 0;
+	cin >> m >> n;
+
+	for(int i = 0; i < n; i++)
+		for(int j = 0; j < m; j++){
+			cin >> arr[i][j];
+			if(arr[i][j] == 1) q.push(make_pair(i, j));
+		}
+
+	while(!q.empty()){
+		x = q.front().first;
+		y = q.front().second;
+		q.pop();
+		for(int i = 0; i < 4; i++){
+			nx = x + dx[i];
+			ny = y + dy[i];
+			if(nx >= 0 && ny >= 0 && nx < n && ny < m && arr[nx][ny] == 0){
+				q.push(make_pair(nx, ny));
+				arr[nx][ny] = arr[x][y] + 1;
+				count = arr[nx][ny] - 1;
+			}
+		}
 	}
+
+	for(int i = 0; i < n; i++)
+		for(int j = 0; j < m; j++)
+			if(!arr[i][j]) count = -1;
+
+	cout << count;
+
 	return 0;
 }
 
 void print_arr(){
-	for(int i = 0; i < arr_size; i++) cout << arr[i] << " ";
-	cout << "\n";
-}
-
-void swap(int a, int b){
-	int temp = arr[a];
-	arr[a] = arr[b];
-	arr[b] = temp;
-}
-
-void heap_in(int x){
-	int i = arr_size;
-	arr[arr_size++] = x;
-	while(i - 1){
-		if(abs(arr[i]) < abs(arr[i/2]) || ((arr[i] < 0) && (arr[i]  == -arr[i/2]))) swap(i, i/2), i /= 2;
-		else return;
+	for(int i = 0; i < n; i++){
+		for(int j = 0; j < m; j++){
+			cout << arr[i][j] << " ";
+		}
+		cout << "\n";
 	}
-	return;
-}
-
-int heap_pop(){
-	int pop = arr[1];
-	int i = 1;
-	int a = arr[--arr_size];
-	arr[arr_size] = 0;
-	while(1){
-		if(abs(arr[2*i]) < abs(arr[i]))
-	}
+			
 }
