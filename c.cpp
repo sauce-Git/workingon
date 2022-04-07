@@ -1,41 +1,22 @@
 #include <iostream>
+#define MAX 15
 using namespace std;
 
-bool selected[8] = {false, };
-int arr[8];
-int arr_size = 0;
-
-
-void pick(int& n, int& m, int c);
-void print_arr(int& m);
-
 int main(){
-	int n, m;
-	cin >> n >> m;
-
-	pick(n, m, m);
-	return 0;
-}
-
-void pick(int& n, int& m, int c){
-	if(!c){
-		print_arr(m);
-		return;
+	int arr[MAX][MAX];
+	for(int i = 1; i < MAX; i++) {
+		arr[0][i] = i;
+		arr[i][1] = 1;
 	}
-	for(int i = 0; i < n; i++){
-		if(!selected[i]){
-			selected[i] = true;
-			arr[arr_size++] = i;
-			pick(n, m, c-1);
-			selected[i] = false;
-			arr_size--;
+	for(int i = 1; i < MAX; i++)
+		for(int j = 2; j < MAX; j++){
+			arr[i][j] = arr[i-1][j] + arr[i][j-1];	
 		}
+	int t, k, n;
+	cin >> t;
+	while(t--){
+		cin >> k >> n;
+		cout << arr[k][n] << "\n";
 	}
-	return;
-}
-
-void print_arr(int& m){
-	for(int i = 0; i < m; i++) cout << arr[i] + 1 << " ";
-	cout << "\n";
-	return;
+	return 0;
 }
