@@ -1,22 +1,19 @@
 #include <iostream>
-#define MAX 15
+#include <algorithm>
+#include <vector>
 using namespace std;
 
 int main(){
-	int arr[MAX][MAX];
-	for(int i = 1; i < MAX; i++) {
-		arr[0][i] = i;
-		arr[i][1] = 1;
+	int n, a, b;
+	vector<pair<int, int>> v;
+	cin >> n;
+	while(n--){
+		cin >> a >> b;
+		v.push_back(make_pair(a, b));
+		sort(v.begin(), v.end(), less<>());
 	}
-	for(int i = 1; i < MAX; i++)
-		for(int j = 2; j < MAX; j++){
-			arr[i][j] = arr[i-1][j] + arr[i][j-1];	
-		}
-	int t, k, n;
-	cin >> t;
-	while(t--){
-		cin >> k >> n;
-		cout << arr[k][n] << "\n";
+	for(int i = 0; i < v.size(); i++){
+		cout << v[i].first << " " << v[i].second << "\n";
 	}
 	return 0;
 }
