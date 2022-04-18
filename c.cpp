@@ -6,6 +6,7 @@ using namespace std;
 bool DP[2][MAX];
 
 int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
 	int max_num;
 	bool is_empty[2];
 	string s;
@@ -21,8 +22,6 @@ int main(){
 	}
 
 	for(int i = 2; i < s.size(); i++){
-		for(int j = 0; j < s.size(); j++) cout << DP[i%2][j] << " ";
-		cout << "\n"; 
 		is_empty[i%2] = true;
 		for(int j = ceil((float)i/2); j < s.size() - i/2; j++){
 			if(DP[i%2][j] && (s[j-(int)ceil((float)i/2)] == s[j+i/2])){
