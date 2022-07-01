@@ -16,13 +16,30 @@ int main(){
 		v.push_back(a);
 	}
 	sort(v.begin(), v.end());
-	int x = 0, y = 0;
+	int x, y;
 	int s = 0;
 	int v_size = v.size();
-	int e = v.size();
+	int e = v.size() - 1;
 	int min_num = NUM_MAX;
 	while(s < e){
-		a = v[s] + v[e];
+		a = abs(v[s] + v[e]);
+		if(a < min_num) {
+			min_num = a;
+			x = v[s];
+			y = v[e];
+		}
+		if(s + 1 < e && abs(v[s+1] + v[e]) < min_num) {
+			s++;
+			continue;
+		} else if(s < e - 1 && abs(v[s] + v[e-1]) < min_num) {
+			e--;
+			continue;
+		} else {
+			s++;
+			e--;
+			continue;
+		}
 	}
+	cout << x << " " << y;
 	return 0;
 }
